@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BukuKu — Admin Panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+    <link rel="stylesheet" href="bukuku.css" />
+    <style>
+      .admin-badge {
+        background: #1a1208;
+        color: var(--amber);
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+      }
+      .user-card {
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+      }
+      .user-card-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 13px;
+        color: var(--text-mid);
+        margin-bottom: 12px;
+      }
+      .user-card-info strong {
+        font-size: 15px;
+        color: var(--text-dark);
+        font-weight: 600;
+      }
+      .action-btns { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+      .btn-approve {
+        background: var(--success-bg); color: var(--success);
+        border: 0.5px solid var(--success); border-radius: 8px;
+        padding: 7px 18px; font-size: 13px; font-family: "DM Sans", sans-serif;
+        cursor: pointer; font-weight: 500; transition: all 0.15s;
+      }
+      .btn-approve:hover { background: var(--success); color: white; }
+      .btn-reject {
+        background: var(--danger-bg); color: var(--danger);
+        border: 0.5px solid var(--danger); border-radius: 8px;
+        padding: 7px 18px; font-size: 13px; font-family: "DM Sans", sans-serif;
+        cursor: pointer; font-weight: 500; transition: all 0.15s;
+      }
+      .btn-reject:hover { background: var(--danger); color: white; }
+      .btn-approve:disabled, .btn-reject:disabled { opacity: 0.5; cursor: not-allowed; }
+      .ktm-toggle {
+        background: none; border: 0.5px solid var(--border-strong);
+        border-radius: 8px; padding: 5px 12px; font-size: 12px;
+        cursor: pointer; color: var(--text-mid); font-family: "DM Sans", sans-serif;
+      }
+      .ktm-wrap { display: none; margin-top: 10px; }
+      .ktm-wrap.open { display: block; }
+      .ktm-img {
+        width: 100%; max-width: 360px; border-radius: 10px;
+        border: 0.5px solid var(--border-strong); margin-top: 8px; display: block;
+      }
+      .reject-reason {
+        width: 100%; border: 0.5px solid var(--border-strong); border-radius: 8px;
+        padding: 8px 12px; font-size: 13px; font-family: "DM Sans", sans-serif;
+        margin-top: 8px; display: none; resize: vertical;
+      }
+      .reject-reason.open { display: block; }
+      .empty-admin { text-align: center; padding: 3rem; color: var(--text-light); font-size: 14px; }
+      .book-card-admin {
+        background: var(--surface); border: 0.5px solid var(--border);
+        border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem;
+      }
+      .book-info-row { font-size: 13px; color: var(--text-mid); margin-bottom: 4px; }
+      .book-info-row strong { color: var(--text-dark); }
+    </style>
+  </head>
+  <body>
+
+    <!-- LOGIN ADMIN -->
+    <div id="screen-admin-login" class="screen active" style="flex-direction:column">
+      <div class="topnav">
+        <div class="brand"><img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" onerror="this.style.display='none'" /> BukuKu <span class="admin-badge">Admin Panel</span></div>
+      </div>
+      <div class="auth-wrap">
+        <div class="auth-box">
+          <div class="auth-logo">🔐 Login Admin</div>
+          <div class="auth-sub">Masuk sebagai administrator BukuKu.</div>
+
+          <label class="form-label">NPM Admin <span>*</span></label>
+          <div class="npm-display">
+            <input type="text" id="admin-npm" placeholder="Masukkan NPM admin" maxlength="12"
+              oninput="this.value = this.value.replace(/\D/g, '')"
+              onkeydown="if(event.key==='Enter') adminLogin()" />
+          </div>
+
+          <label class="form-label" style="margin-top:1rem">Password <span>*</span></label>
+          <div class="pass-wrap">
+            <input class="form-input" type="password" id="admin-pass" placeholder="Password"
+              style="padding-right:42px" onkeydown="if(event.key==='Enter') adminLogin()" />
+            <button class="pass-toggle" onclick="toggleAdminPass()">
+              <i class="ti ti-eye" id="admin-pass-icon"></i>
+            </button>
+          </div>
+
+          <button class="btn-full" style="margin-top:1.5rem" id="btn-admin-login" onclick="adminLogin()">Masuk</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD ADMIN -->
+    <div id="screen-admin-dashboard" class="screen dashboard-screen" style="flex-direction:column">
+      <div class="topnav">
+        <div class="brand"><img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" onerror="this.style.display='none'" /> BukuKu <span class="admin-badge">Admin Panel</span></div>
+        <div class="nav-actions">
+          <span style="font-size:13px;color:var(--text-mid)" id="admin-nama-display"></span>
+          <button class="nav-btn" onclick="adminLogout()">
+            <i class="ti ti-logout" style="margin-right:4px"></i>Keluar
+          </button>
+        </div>
+      </div>
+      <div class="app-layout">
+        <div class="sidebar">
+          <div class="sidebar-item active" id="amenu-verifikasi" onclick="switchAdminTab('verifikasi')">
+            <i class="ti ti-user-check"></i> Verifikasi User
+            <span class="sidebar-badge" id="badge-pending-users">0</span>
+          </div>
+          <div class="sidebar-item" id="amenu-buku" onclick="switchAdminTab('buku')">
+            <i class="ti ti-books"></i> Verifikasi Buku
+            <span class="sidebar-badge" id="badge-pending-books">0</span>
+          </div>
+          <div class="sidebar-item" id="amenu-users" onclick="switchAdminTab('users')">
+            <i class="ti ti-users"></i> Semua User
+          </div>
+        </div>
+
+        <div class="main-content" id="admin-content">
+
+          <!-- TAB: Verifikasi User -->
+          <div id="atab-verifikasi">
+            <div class="section-head" style="margin-bottom:1.5rem">
+              <h2>Verifikasi Pendaftaran User</h2>
+            </div>
+            <div id="pending-users-list">
+              <div class="empty-admin">Memuat data...</div>
+            </div>
+          </div>
+
+          <!-- TAB: Verifikasi Buku -->
+          <div id="atab-buku" style="display:none">
+            <div class="section-head" style="margin-bottom:1.5rem">
+              <h2>Verifikasi Listing Buku</h2>
+            </div>
+            <div id="pending-books-list">
+              <div class="empty-admin">Memuat data...</div>
+            </div>
+          </div>
+
+          <!-- TAB: Semua User -->
+          <div id="atab-users" style="display:none">
+            <div class="section-head" style="margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;">
+              <h2>Semua User Terdaftar</h2>
+              <button onclick="openModalTambahUser()" class="btn-full" style="width:auto;padding:8px 16px;font-size:13px;">
+                + Tambah User
+              </button>
+            </div>
+            <div style="margin-bottom:1rem;">
+              <input 
+                type="text" 
+                id="search-user-input"
+                class="form-input" 
+                placeholder="🔍 Cari nama, NPM, atau email..."
+                oninput="filterAllUsers()"
+                style="max-width:360px;"
+              />
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nama</th><th>NPM</th><th>Email</th>
+                    <th>Role</th><th>Status</th><th>Terdaftar</th><th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="all-users-tbody">
+                  <tr><td colspan="6" style="text-align:center;color:#999;padding:20px">Memuat...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- MODAL TAMBAH USER -->
+          <div id="modal-tambah-user" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;" onclick="if(event.target===this)closeModalTambahUser()">
+            <div style="background:var(--surface);border-radius:16px;padding:2rem;width:100%;max-width:440px;margin:1rem;max-height:90vh;overflow-y:auto;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+                <h3 style="margin:0;font-size:16px;">👤 Tambah User Baru</h3>
+                <button onclick="closeModalTambahUser()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-mid);">✕</button>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Nama Lengkap <span style="color:var(--danger)">*</span></label>
+                <input type="text" id="new-user-nama" class="form-input" placeholder="Nama lengkap" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">NPM / NIP <span style="color:var(--danger)">*</span></label>
+                <input type="text" id="new-user-npm" class="form-input" placeholder="NPM atau NIP" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email <span style="color:var(--danger)">*</span></label>
+                <input type="email" id="new-user-email" class="form-input" placeholder="Email aktif" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Role <span style="color:var(--danger)">*</span></label>
+                <select id="new-user-role" class="form-input">
+                  <option value="penyewa">Penyewa</option>
+                  <option value="pemilik">Pemilik</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password Sementara <span style="color:var(--danger)">*</span></label>
+                <input type="text" id="new-user-password" class="form-input" placeholder="Min. 8 karakter" />
+              </div>
+
+              <button id="btn-simpan-user" onclick="apiTambahUser()" class="btn-full" style="margin-top:1rem;">
+                Buat Akun
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE BOTTOM NAV (Admin) -->
+<nav class="mobile-bottom-nav" id="admin-bottom-nav">
+  <button class="mbn-item active" id="ambn-verifikasi" onclick="switchAdminTab('verifikasi')">
+    <i class="ti ti-user-check"></i>
+    <span>Verifikasi</span>
+    <span class="mbn-badge" id="mbn-badge-users">0</span>
+  </button>
+  <button class="mbn-item" id="ambn-buku" onclick="switchAdminTab('buku')">
+    <i class="ti ti-books"></i>
+    <span>Buku</span>
+    <span class="mbn-badge" id="mbn-badge-books">0</span>
+  </button>
+  <button class="mbn-item" id="ambn-users" onclick="switchAdminTab('users')">
+    <i class="ti ti-users"></i>
+    <span>Semua User</span>
+  </button>
+</nav>
+
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>

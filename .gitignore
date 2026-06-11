@@ -1,0 +1,9 @@
+# Database
+*.sql
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc docs
+*.pdf

@@ -1,0 +1,1707 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BukuKu — Platform Sewa Buku Kampus</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
+    />
+    <link rel="stylesheet" href="bukuku.css" />
+  </head>
+  <body>
+    <h2 class="sr-only">
+      BukuKu — Platform Sewa Buku Online untuk Universitas.
+    </h2>
+
+    <!-- ===================== LANDING SCREEN ===================== -->
+    <div
+      id="screen-landing"
+      class="screen active"
+      style="flex-direction: column"
+    >
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-landing')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu <span>UMSU. Edition</span>
+        </div>
+        <div class="nav-actions">
+          <button class="nav-btn" onclick="apiLogout()">
+            Masuk
+          </button>
+          <button
+            class="nav-btn primary"
+            onclick="showScreen('screen-register')"
+          >
+            Daftar
+          </button>
+        </div>
+      </div>
+
+      <div class="hero">
+        <h1>Sewa & Sewakan Buku<br /><em>Sesama Mahasiswa</em></h1>
+        <p>
+          Platform peer-to-peer khusus kampus. Hemat biaya belajar dengan
+          menyewa buku dari teman, atau dapatkan penghasilan tambahan dari
+          koleksimu.
+        </p>
+        <div class="hero-actions">
+          <button
+            class="btn-hero amber"
+            onclick="showScreen('screen-register')"
+          >
+            Mulai Sekarang
+          </button>
+          <button
+            class="btn-hero outline"
+            onclick="showScreen('screen-login')"
+          >
+            Lihat Koleksi Buku
+          </button>
+        </div>
+      </div>
+
+      <div class="features-strip">
+        <div class="feature-card">
+          <i class="ti ti-users" aria-hidden="true"></i>
+          <h3>Peer-to-Peer</h3>
+          <p>Langsung terhubung antar mahasiswa kampus</p>
+        </div>
+        <div class="feature-card">
+          <i class="ti ti-shield-check" aria-hidden="true"></i>
+          <h3>Terverifikasi Admin</h3>
+          <p>Setiap listing buku dicek sebelum tayang</p>
+        </div>
+        <div class="feature-card">
+          <i class="ti ti-message-circle" aria-hidden="true"></i>
+          <h3>Pesan Langsung</h3>
+          <p>Chat dengan pemilik sebelum menyewa</p>
+        </div>
+        <div class="feature-card">
+          <i class="ti ti-star" aria-hidden="true"></i>
+          <h3>Ulasan & Rating</h3>
+          <p>Nilai kondisi buku dan pengalaman sewa</p>
+        </div>
+      </div>
+
+      <div style="padding: 2rem">
+        <div class="section-head">
+          <h2>Buku Terbaru Tersedia</h2>
+          <span class="see-all" onclick="showScreen('screen-login'); switchPenyewaTab('browse'); loadBooks()">Lihat semua</span>
+        </div>
+        <div class="book-grid">
+          <div class="book-card" onclick="showBookDetail()">
+            <div class="book-cover" style="background: #fff8ed">
+              📗<span class="status-badge status-available">Tersedia</span>
+            </div>
+            <div class="book-info">
+              <h4>Kalkulus Lanjut</h4>
+              <div class="genre">Matematika</div>
+              <div class="stars">★★★★☆</div>
+              <div class="price">Rp 8.000 <span>/ minggu</span></div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-cover" style="background: #edf5ff">
+              📘<span class="status-badge status-borrowed">Dipinjam</span>
+            </div>
+            <div class="book-info">
+              <h4>Basis Data</h4>
+              <div class="genre">Informatika</div>
+              <div class="stars">★★★★★</div>
+              <div class="price">Rp 10.000 <span>/ minggu</span></div>
+            </div>
+          </div>
+          <div class="book-card" onclick="showBookDetail()">
+            <div class="book-cover" style="background: #fff0f0">
+              📕<span class="status-badge status-available">Tersedia</span>
+            </div>
+            <div class="book-info">
+              <h4>Hukum Perdata</h4>
+              <div class="genre">Hukum</div>
+              <div class="stars">★★★☆☆</div>
+              <div class="price">Rp 12.000 <span>/ minggu</span></div>
+            </div>
+          </div>
+          <div class="book-card" onclick="showBookDetail()">
+            <div class="book-cover" style="background: #f0fff0">
+              📗<span class="status-badge status-available">Tersedia</span>
+            </div>
+            <div class="book-info">
+              <h4>Biokimia Dasar</h4>
+              <div class="genre">Kedokteran</div>
+              <div class="stars">★★★★☆</div>
+              <div class="price">Rp 9.000 <span>/ minggu</span></div>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-cover" style="background: #fff5e0">
+              📙<span class="status-badge status-pending">Pending</span>
+            </div>
+            <div class="book-info">
+              <h4>Akuntansi Biaya</h4>
+              <div class="genre">Ekonomi</div>
+              <div class="stars">★★★★☆</div>
+              <div class="price">Rp 7.500 <span>/ minggu</span></div>
+            </div>
+          </div>
+          <div class="book-card" onclick="showBookDetail()">
+            <div class="book-cover" style="background: #f5f0ff">
+              📔<span class="status-badge status-available">Tersedia</span>
+            </div>
+            <div class="book-info">
+              <h4>Psikologi Sosial</h4>
+              <div class="genre">Psikologi</div>
+              <div class="stars">★★★★★</div>
+              <div class="price">Rp 6.000 <span>/ minggu</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== LOGIN SCREEN ===================== -->
+    <div id="screen-login" class="screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-landing')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu
+        </div>
+      </div>
+      <div class="auth-wrap">
+        <div class="auth-box">
+          <div class="auth-logo">
+            <img src="logo.png" style="width:56px;height:56px;object-fit:contain;border-radius:12px;display:block;margin:0 auto 8px;" />
+            Selamat Datang
+          </div>
+          <div class="auth-sub">
+            Masuk ke BukuKu pilih peranmu terlebih dahulu.
+          </div>
+
+          <label class="form-label">Masuk sebagai <span>*</span></label>
+          <div class="role-select">
+            <div
+              class="role-opt selected"
+              id="login-role-penyewa"
+              onclick="selectLoginRole('penyewa')"
+            >
+              <i class="ti ti-book-2" aria-hidden="true"></i>
+              <div class="role-name">Penyewa</div>
+              <div class="role-desc">Cari & sewa buku dari mahasiswa lain</div>
+            </div>
+            <div
+              class="role-opt"
+              id="login-role-pemilik"
+              onclick="selectLoginRole('pemilik')"
+            >
+              <i class="ti ti-library" aria-hidden="true"></i>
+              <div class="role-name">Pemilik Buku</div>
+              <div class="role-desc">Sewakan buku koleksimu ke sesama</div>
+            </div>
+          </div>
+
+          <label class="form-label">NPM <span>*</span></label>
+          <div class="npm-display">
+            <input
+              type="text"
+              placeholder=""
+              maxlength="12"
+              id="login-npm"
+              oninput="this.value = this.value.replace(/\D/g, '')"
+            />
+          </div>
+          <div class="input-hint"></div>
+
+          <label class="form-label">Password <span>*</span></label>
+          <div class="pass-wrap">
+            <input
+              class="form-input"
+              type="password"
+              placeholder=""
+              id="login-pass"
+              style="padding-right: 42px"
+            />
+            <button
+              class="pass-toggle"
+              onclick="togglePass('login-pass', this)"
+            >
+              <i class="ti ti-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div
+            style="display: flex; justify-content: flex-end; margin-top: 8px"
+          >
+            <a onclick="showScreen('screen-forgot')"
+              style="font-size: 12px; color: var(--warm-brown); cursor: pointer"
+              >Lupa password?</a
+            >
+          </div>
+
+          <button class="btn-full" onclick="apiLogin()">Masuk</button>
+
+          <div class="divider"><span>atau</span></div>
+          <div class="auth-switch" style="margin-top: 1rem">
+            Belum punya akun?
+            <a onclick="showScreen('screen-register')">Daftar sekarang</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== REGISTER SCREEN (dari form_login.html) ===================== -->
+    <div id="screen-register" class="screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-landing')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu
+        </div>
+      </div>
+      <div class="auth-wrap top-align">
+        <div class="auth-box">
+          <!-- Step Indicator -->
+          <div class="step-indicator">
+            <div class="step active" id="s1">
+              <div class="step-num" id="s1-num">1</div>
+              <div class="step-label">Data Diri</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" id="s2">
+              <div class="step-num" id="s2-num">2</div>
+              <div class="step-label">Upload KTM</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" id="s3">
+              <div class="step-num" id="s3-num">3</div>
+              <div class="step-label">Selesai</div>
+            </div>
+          </div>
+
+          <!-- STEP 1: Data Diri -->
+          <div id="reg-step1">
+            <div class="auth-logo">
+              <img src="logo.png" style="width:48px;height:48px;object-fit:contain;border-radius:12px;display:block;margin:0 auto 8px;" />
+              Buat Akun
+            </div>
+            <div class="auth-sub">
+              Daftarkan dirimu sebagai mahasiswa BukuKu.
+            </div>
+
+            <label class="form-label">Nama Lengkap <span>*</span></label>
+            <input
+              class="form-input"
+              type="text"
+              placeholder=""
+              id="reg-nama"
+            />
+            <div class="input-hint">
+              Harus sesuai dengan Nama Lengkap yang tertera di KTM
+            </div>
+
+            <label class="form-label">Email <span>*</span></label>
+            <input
+              class="form-input"
+              type="email"
+              placeholder=""
+              id="reg-email"
+            />
+            <div class="input-hint">
+              Boleh email apa saja, digunakan untuk notifikasi
+            </div>
+
+            <label class="form-label">NPM <span>*</span></label>
+            <div class="npm-display">
+              <input
+                type="text"
+                placeholder=""
+                maxlength="12"
+                id="reg-npm"
+                oninput="this.value = this.value.replace(/\D/g, '')"
+              />
+            </div>
+            <div class="input-hint">
+              Harus sesuai dengan NPM yang tertera di KTM
+            </div>
+
+            <label class="form-label">Buat Password <span>*</span></label>
+            <div class="pass-wrap">
+              <input
+                class="form-input"
+                type="password"
+                placeholder="Minimal 8 karakter"
+                id="reg-pass"
+                style="padding-right: 42px"
+                oninput="checkPass()"
+              />
+              <button
+                class="pass-toggle"
+                onclick="togglePass('reg-pass', this)"
+              >
+                <i class="ti ti-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div id="pass-strength" style="display: none; margin-top: 6px">
+              <div
+                style="
+                  height: 4px;
+                  border-radius: 2px;
+                  background: var(--surface2);
+                  overflow: hidden;
+                "
+              >
+                <div
+                  id="pass-bar"
+                  style="
+                    height: 100%;
+                    width: 0;
+                    transition: width 0.3s;
+                    border-radius: 2px;
+                  "
+                ></div>
+              </div>
+              <span
+                id="pass-label"
+                style="font-size: 11px; margin-top: 3px; display: block"
+              ></span>
+            </div>
+
+            <label class="form-label">Konfirmasi Password <span>*</span></label>
+            <div class="pass-wrap">
+              <input
+                class="form-input"
+                type="password"
+                placeholder="Ulangi password"
+                id="reg-pass2"
+                style="padding-right: 42px"
+              />
+              <button
+                class="pass-toggle"
+                onclick="togglePass('reg-pass2', this)"
+              >
+                <i class="ti ti-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <button class="btn-full" onclick="goToStep2()">
+              Lanjut Upload KTM
+            </button>
+            <div class="auth-switch">
+              Sudah punya akun?
+              <a onclick="showScreen('screen-login')">Masuk</a>
+            </div>
+          </div>
+
+          <!-- STEP 2: Upload KTM -->
+          <div id="reg-step2" style="display: none">
+            <div class="auth-logo">Verifikasi KTM</div>
+            <div class="auth-sub">
+              Unggah foto KTM agar admin dapat memverifikasi nama dan NPM kamu.
+            </div>
+
+            <label class="form-label">Foto KTM <span>*</span></label>
+            <div
+              class="upload-zone"
+              id="ktm-zone"
+              onclick="document.getElementById('ktm-file').click()"
+            >
+              <i class="ti ti-id" aria-hidden="true"></i>
+              <div class="main-text">Klik untuk unggah foto KTM</div>
+              <div class="sub-text">
+                Format JPG / PNG · Maks. 5 MB · Pastikan terbaca jelas
+              </div>
+            </div>
+            <div class="upload-preview" id="ktm-preview">
+              <i class="ti ti-circle-check" aria-hidden="true"></i>
+              <span id="ktm-filename">ktm.jpg</span>
+              <span class="remove" onclick="removeUpload()">✕ Hapus</span>
+            </div>
+            <input
+              type="file"
+              id="ktm-file"
+              accept="image/*"
+              style="display: none"
+              onchange="handleFile(this)"
+            />
+
+            <div class="info-box">
+              <strong>📋 Pastikan foto KTM memperlihatkan:</strong>
+              ✓ Nama lengkap &nbsp;·&nbsp; ✓ NPM &nbsp;·&nbsp; ✓ Foto wajah
+              &nbsp;·&nbsp; ✓ Nama universitas
+            </div>
+
+            <div
+              style="
+                background: var(--surface2);
+                border-radius: 8px;
+                padding: 12px 14px;
+                margin-top: 14px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  color: var(--text-light);
+                  margin-bottom: 8px;
+                  font-weight: 500;
+                "
+              >
+                Ringkasan data yang didaftarkan:
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 13px;
+                  padding: 4px 0;
+                  border-bottom: 0.5px solid var(--border);
+                "
+              >
+                <span style="color: var(--text-light)">Nama</span
+                ><strong id="preview-nama">—</strong>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 13px;
+                  padding: 4px 0;
+                  border-bottom: 0.5px solid var(--border);
+                "
+              >
+                <span style="color: var(--text-light)">NPM</span
+                ><strong id="preview-npm">—</strong>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 13px;
+                  padding: 4px 0;
+                "
+              >
+                <span style="color: var(--text-light)">Email</span
+                ><strong id="preview-email">—</strong>
+              </div>
+            </div>
+
+            <button class="btn-full" onclick="apiRegister()">
+              Kirim Pendaftaran
+            </button>
+            <div style="text-align: center; margin-top: 12px">
+              <a
+                style="
+                  font-size: 13px;
+                  color: var(--text-light);
+                  cursor: pointer;
+                "
+                onclick="backToStep1()"
+                >Kembali edit data diri</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== PENDING SCREEN ===================== -->
+    <div id="screen-pending" class="screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-landing')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu
+        </div>
+      </div>
+      <div class="pending-wrap">
+        <div class="pending-box">
+          <div class="pending-icon">⏳</div>
+          <h2>Pendaftaran Terkirim!</h2>
+          <p style="margin-bottom: 1rem">
+            Akun kamu sedang diverifikasi oleh admin. Biasanya selesai dalam
+            <strong>1×24 jam</strong>.
+          </p>
+          <div class="pending-detail">
+            <div class="row">
+              <span>Nama</span><strong id="pend-nama">—</strong>
+            </div>
+            <div class="row">
+              <span>NPM</span><strong id="pend-npm">—</strong>
+            </div>
+            <div class="row">
+              <span>Email</span><strong id="pend-email">—</strong>
+            </div>
+            <div class="row">
+              <span>Status</span
+              ><strong style="color: var(--warning)"
+                >🔄 Menunggu Verifikasi</strong
+              >
+            </div>
+          </div>
+          <div class="info-box" style="text-align: left">
+            <strong>Langkah selanjutnya:</strong>
+            Kamu akan menerima notifikasi email setelah admin menyetujui KTM
+            kamu. Setelah aktif, pilih role saat login — bisa sebagai Penyewa
+            maupun Pemilik Buku.
+          </div>
+          <button
+            class="btn-full"
+            style="
+              background: transparent;
+              color: var(--warm-brown);
+              border: 0.5px solid var(--warm-brown);
+            "
+            onclick="showScreen('screen-login')"
+          >
+            Kembali ke Halaman Masuk
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- SCREEN LUPA PASSWORD -->
+<div class="screen" id="screen-forgot">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);">
+  <div style="background:var(--surface);border-radius:16px;padding:32px;width:100%;max-width:400px;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+      
+      <div style="text-align:center;margin-bottom:24px;">
+        <div style="font-size:36px">🔑</div>
+        <h2 style="font-size:20px;font-weight:700;margin:8px 0 4px">Lupa Password</h2>
+        <p style="font-size:13px;color:var(--text-light)">Masukkan NPM kamu, kami akan kirim instruksi reset ke email terdaftar.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">NPM</label>
+        <input type="text" id="forgot-npm" class="form-input" placeholder="Masukkan NPM kamu" />
+      </div>
+
+      <button id="btn-forgot" onclick="apiForgotPassword()" class="btn-full" style="margin-top:16px;">
+        Kirim Instruksi Reset
+      </button>
+
+      <div style="text-align:center;margin-top:16px;">
+        <a onclick="showScreen('screen-login')" style="font-size:13px;color:var(--warm-brown);cursor:pointer;">
+          ← Kembali ke Login
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- SCREEN RESET PASSWORD -->
+    <div class="screen" id="screen-reset">
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--cream);padding:1rem;">
+  <div style="background:var(--surface);border-radius:16px;padding:1.5rem;width:100%;max-width:400px;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+          <div style="text-align:center;margin-bottom:24px;">
+            <div style="font-size:36px">🔐</div>
+            <h2 style="font-size:20px;font-weight:700;margin:8px 0 4px">Reset Password</h2>
+            <p style="font-size:13px;color:var(--text-light)">Masukkan kode yang dikirim ke email kamu dan password baru.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kode Reset</label>
+            <input type="text" id="reset-token" class="form-input" placeholder="Masukkan 6 digit kode" maxlength="6" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password Baru</label>
+            <div style="position:relative;">
+              <input type="password" id="reset-pass" class="form-input" placeholder="Minimal 8 karakter" />
+              <button type="button" onclick="togglePass('reset-pass', this)" 
+                style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-light);">
+                <i class="ti ti-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Konfirmasi Password Baru</label>
+            <div style="position:relative;">
+              <input type="password" id="reset-pass2" class="form-input" placeholder="Ulangi password baru" />
+              <button type="button" onclick="togglePass('reset-pass2', this)"
+                style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-light);">
+                <i class="ti ti-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <button id="btn-reset" onclick="apiResetPassword()" class="btn-full" style="margin-top:16px;">
+            Ganti Password
+          </button>
+
+          <div style="text-align:center;margin-top:16px;">
+            <a onclick="showScreen('screen-forgot')" style="font-size:13px;color:var(--warm-brown);cursor:pointer;">
+              ← Kembali
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ===================== PENYEWA DASHBOARD ===================== -->
+    <div id="screen-penyewa" class="screen dashboard-screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-landing')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu <span>UMSU. Edition</span>
+        </div>
+        <div class="nav-actions">
+          <div class="avatar" id="avatar-penyewa">SA</div>
+          <button class="nav-btn" onclick="apiLogout()">
+            Keluar
+          </button>
+        </div>
+      </div>
+      <div class="app-layout">
+        <div class="sidebar">
+          <div class="sidebar-item active" onclick="switchPenyewaTab('browse'); loadBooks()">
+            <i class="ti ti-books" aria-hidden="true"></i> Browse Buku
+          </div>
+          <div class="sidebar-item" onclick="switchPenyewaTab('sewa')">
+            <i class="ti ti-receipt" aria-hidden="true"></i> Sewa Aktif
+            <span class="sidebar-badge" id="badge-sewa-aktif" style="display:none"></span>
+          </div>
+          <div class="sidebar-item" onclick="switchPenyewaTab('riwayat')">
+            <i class="ti ti-history" aria-hidden="true"></i> Riwayat
+          </div>
+          <div class="sidebar-item" onclick="switchPenyewaTab('notifikasi')">
+            <i class="ti ti-bell" aria-hidden="true"></i> Notifikasi
+            <span class="sidebar-badge" id="badge-notif-penyewa" style="display:none"></span>
+          </div>
+          <div class="sidebar-item" onclick="openChatPenyewa()">
+            <i class="ti ti-message-circle" aria-hidden="true"></i> Pesan
+            <span class="sidebar-badge" id="badge-pesan-penyewa" style="display:none">0</span>
+          </div>
+          <div class="sidebar-item" onclick="switchPenyewaTab('wishlist')">
+            <i class="ti ti-heart" aria-hidden="true"></i> Wishlist
+          </div>
+          <div class="sidebar-item" style="margin-top: auto" onclick="switchPenyewaTab('profil')">
+            <i class="ti ti-user" aria-hidden="true"></i> Profil
+          </div>
+        </div>
+        <div class="main-content" id="penyewa-content">
+          <!-- BROWSE TAB -->
+          <div id="tab-browse">
+            <div class="section-head"><h2>Temukan Buku</h2></div>
+            <div class="search-bar">
+              <input
+                class="search-input"
+                id="browse-search"
+                placeholder="🔍  Cari judul, penulis, atau genre..."
+                style="flex: 1"
+                oninput="loadBooks()"
+              />
+
+              <select class="form-select" id="browse-harga" style="width: 130px" onchange="loadBooks()">
+                <option value="">Semua Harga</option>
+                <option value="5000">≤ Rp 5.000</option>
+                <option value="5000-10000">Rp 5–10.000</option>
+                <option value="10000">≥ Rp 10.000</option>
+              </select>
+            </div>
+
+
+            <div class="cs-wrap" style="margin-bottom:10px">
+  <div class="cs-row">
+    <button type="button" class="cs-btn" id="gbtn-browse-kategori" onclick="gToggleBrowse('kategori')" style="flex:none;width:auto;min-width:110px">
+      <span>Kategori</span>
+      <span style="display:flex;align-items:center;gap:5px">
+        <span class="cs-badge-g" id="gbadge-browse-kategori">0</span>
+        <i class="ti ti-chevron-down" style="font-size:13px"></i>
+      </span>
+    </button>
+    <button type="button" class="cs-btn" id="gbtn-browse-genre" onclick="gToggleBrowse('genre')" style="flex:none;width:auto;min-width:110px">
+      <span>Genre</span>
+      <span style="display:flex;align-items:center;gap:5px">
+        <span class="cs-badge-g" id="gbadge-browse-genre">0</span>
+        <i class="ti ti-chevron-down" style="font-size:13px"></i>
+      </span>
+    </button>
+    <button type="button" class="cs-btn" id="gbtn-browse-bidang" onclick="gToggleBrowse('bidang')" style="flex:none;width:auto;min-width:110px">
+      <span>Bidang Ilmu</span>
+      <span style="display:flex;align-items:center;gap:5px">
+        <span class="cs-badge-g" id="gbadge-browse-bidang">0</span>
+        <i class="ti ti-chevron-down" style="font-size:13px"></i>
+      </span>
+    </button>
+  </div>
+  <div class="cs-dropdown-g" id="gdd-browse-kategori">
+    <div class="cs-sec">Kategori</div>
+    <div class="cs-grid-g" id="ggrid-browse-kategori"></div>
+    <div class="cs-foot-g">
+      <button type="button" class="cs-clear-g" onclick="gClearBrowse('kategori')">Hapus semua</button>
+      <button type="button" class="cs-done-g" onclick="gCloseBrowse('kategori')">Selesai</button>
+    </div>
+  </div>
+  <div class="cs-dropdown-g" id="gdd-browse-genre">
+    <div class="cs-sec">Genre</div>
+    <div class="cs-grid-g" id="ggrid-browse-genre"></div>
+    <div class="cs-foot-g">
+      <button type="button" class="cs-clear-g" onclick="gClearBrowse('genre')">Hapus semua</button>
+      <button type="button" class="cs-done-g" onclick="gCloseBrowse('genre')">Selesai</button>
+    </div>
+  </div>
+  <div class="cs-dropdown-g" id="gdd-browse-bidang">
+    <div class="cs-sec">Bidang Ilmu</div>
+    <div class="cs-grid-g" id="ggrid-browse-bidang"></div>
+    <div class="cs-foot-g">
+      <button type="button" class="cs-clear-g" onclick="gClearBrowse('bidang')">Hapus semua</button>
+      <button type="button" class="cs-done-g" onclick="gCloseBrowse('bidang')">Selesai</button>
+    </div>
+  </div>
+</div>
+
+
+            <div class="filter-bar">
+              <span class="filter-chip active" onclick="setFilterChip(this); loadBooks()">Semua</span>
+              <span class="filter-chip" onclick="setFilterChip(this); loadBooks()">Tersedia</span>
+              <span class="filter-chip" onclick="setFilterChip(this); loadBooks()">Rating Tinggi</span>
+              <span class="filter-chip" onclick="setFilterChip(this); loadBooks()">Harga Murah</span>
+              <span class="filter-chip" onclick="setFilterChip(this); loadBooks()">Terbaru</span>
+              <span class="filter-chip" onclick="setFilterChip(this); loadBooks()">Jurusan Saya</span>
+            </div>
+            <div class="book-grid" id="browse-book-grid">
+              <div style="grid-column:1/-1;padding:40px;text-align:center;color:#999;font-size:13px;">
+                Memuat buku...
+              </div>
+            </div>
+          </div>
+          
+          <!-- SEWA AKTIF TAB -->
+          <div id="tab-sewa" style="display: none">
+            <div class="section-head"><h2>Sewa Aktif</h2></div>
+            <div id="sewa-aktif-list">
+              <div style="padding:40px;text-align:center;color:#999;font-size:13px;">Memuat...</div>
+            </div>
+          </div>
+
+          
+          <!-- RIWAYAT TAB -->
+          <div id="tab-riwayat" style="display: none">
+            <div class="section-head"><h2>Riwayat Sewa</h2></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Buku</th>
+                    <th>Pemilik</th>
+                    <th>Durasi</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                  <tbody id="riwayat-tbody">
+                    <tr><td colspan="6" style="text-align:center;color:#999;padding:20px">Memuat...</td></tr>
+                  </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- WISHLIST TAB -->
+          <!-- WISHLIST TAB -->
+          <div id="tab-wishlist" style="display: none">
+            <div class="section-head"><h2>Wishlist Buku</h2></div>
+              <div class="book-grid" id="wishlist-grid">
+                <div style="padding:40px;text-align:center;color:#999;font-size:13px;">Memuat wishlist...</div>
+              </div>
+          </div>
+
+          <!-- TAB NOTIFIKASI PENYEWA -->
+          <div id="tab-notifikasi" style="display:none">
+            <div class="section-head" style="margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;">
+              <h2>Notifikasi</h2>
+              <button onclick="tandaiSemuaDibacaPenyewa()" 
+                style="font-size:12px;padding:4px 12px;border-radius:8px;background:var(--surface2);border:0.5px solid var(--border);color:var(--text-mid);cursor:pointer;">
+                Tandai semua dibaca
+              </button>
+            </div>
+            <div id="notifikasi-list-penyewa">
+              <div style="text-align:center;padding:2rem;color:var(--text-light);font-size:13px">Memuat...</div>
+            </div>
+          </div>
+
+
+          <!-- TAB PROFIL PENYEWA -->
+<div id="tab-profil" style="display:none">
+  <h2 style="font-size:18px;font-weight:600;margin-bottom:1.5rem;">Profil</h2>
+
+  <!-- Card Info — full width di atas -->
+  <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;">
+      <div id="profil-avatar-penyewa" style="width:56px;height:56px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--warm-brown);flex-shrink:0;overflow:hidden;"></div>
+      <div>
+        <div id="profil-nama-penyewa" style="font-size:16px;font-weight:600;color:var(--text-dark);"></div>
+        <div style="font-size:12px;color:var(--warm-brown);margin-top:2px;">Penyewa</div>
+      </div>
+    </div>
+    <div style="border-top:0.5px solid var(--border);padding-top:1rem;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;justify-content:space-between;font-size:13px;">
+        <span style="color:var(--text-mid);">NPM</span>
+        <span id="profil-npm-penyewa" style="font-weight:500;color:var(--text-dark);"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;">
+        <span style="color:var(--text-mid);">Email</span>
+        <span id="profil-email-penyewa" style="font-weight:500;color:var(--text-dark);"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;">
+        <span style="color:var(--text-mid);">Jurusan</span>
+        <span id="profil-jurusan-penyewa" style="font-weight:500;color:var(--text-dark);"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tombol kiri + Panel kanan -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;">
+
+    <!-- KIRI: Tombol-tombol -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <button onclick="profilAction('ktm', 'penyewa')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-id-badge-2" style="font-size:16px;color:var(--warm-brown)"></i> Lihat Foto KTM
+      </button>
+      <button onclick="profilAction('uploadfoto', 'penyewa')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-camera" style="font-size:16px;color:var(--warm-brown)"></i> Upload Foto Profil
+      </button>
+      <button onclick="profilAction('edit', 'penyewa')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-edit" style="font-size:16px;color:var(--warm-brown)"></i> Edit Profil
+      </button>
+      <button onclick="profilAction('password', 'penyewa')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-lock" style="font-size:16px;color:var(--warm-brown)"></i> Ganti Password
+      </button>
+      <button onclick="profilAction('keluar', 'penyewa')" style="width:100%;padding:10px;border-radius:10px;background:var(--danger-bg);border:0.5px solid var(--danger);color:var(--danger);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-logout" style="font-size:16px;"></i> Keluar
+      </button>
+    </div>
+
+    <!-- KANAN: Panel konten -->
+    <div id="profil-panel-penyewa" style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;min-height:240px;">
+      <div style="text-align:center;padding:3rem;color:var(--text-light);font-size:13px;">
+        Pilih menu di kiri untuk menampilkan konten.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+    </div>
+
+    <!-- BOTTOM NAV MOBILE - PENYEWA -->
+<div class="mobile-bottom-nav" id="mobile-nav-penyewa">
+  <button class="mbn-item active" id="mbn-browse" onclick="switchPenyewaTab('browse'); loadBooks(); setMbnActive('mbn-browse')">
+    <i class="ti ti-books"></i>
+    <span>Browse</span>
+  </button>
+  <button class="mbn-item" id="mbn-sewa" onclick="switchPenyewaTab('sewa'); setMbnActive('mbn-sewa')">
+    <i class="ti ti-receipt"></i>
+    <span>Sewa</span>
+    <span class="mbn-badge" id="mbn-badge-sewa"></span>
+  </button>
+  <button class="mbn-item" id="mbn-notif" onclick="switchPenyewaTab('notifikasi'); setMbnActive('mbn-notif')">
+    <i class="ti ti-bell"></i>
+    <span>Notifikasi</span>
+    <span class="mbn-badge" id="mbn-badge-notif"></span>
+  </button>
+  <button class="mbn-item" id="mbn-pesan" onclick="openChatPenyewa(); setMbnActive('mbn-pesan')">
+    <i class="ti ti-message-circle"></i>
+    <span>Pesan</span>
+    <span class="mbn-badge" id="mbn-badge-pesan"></span>
+  </button>
+  <button class="mbn-item" id="mbn-profil" onclick="switchPenyewaTab('profil'); setMbnActive('mbn-profil')">
+    <i class="ti ti-user"></i>
+    <span>Profil</span>
+  </button>
+</div>
+
+  </div>
+</div>
+
+
+      
+
+   
+
+  <!-- ===================== MODAL BOOK DETAIL ===================== -->
+<div id="modal-bookdetail" onclick="handleModalOverlayClick(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;">
+<div style="background:var(--surface);border-radius:16px;width:90%;max-width:900px;max-height:90vh;overflow:hidden;position:relative;" onclick="event.stopPropagation()">    
+    <!-- Tombol tutup -->
+    <button onclick="closeModalDetail()" style="position:sticky;top:12px;float:right;margin:12px 12px 0 0;background:var(--surface2);border:none;border-radius:50%;width:32px;height:32px;font-size:18px;cursor:pointer;color:var(--text-mid);z-index:10;display:flex;align-items:center;justify-content:center;">✕</button>
+
+<div class="main-content" style="padding:1.5rem;overflow:hidden;">      <div class="book-detail">
+        <div>
+          <div class="book-cover-large">📗</div>
+          <div style="margin-top:1rem;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;color:var(--text-mid)">📸 Kondisi Buku</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+              <div id="book-foto-2" style="background:var(--surface2);border-radius:8px;height:70px;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;">📷</div>
+              <div id="book-foto-3" style="background:var(--surface2);border-radius:8px;height:70px;display:flex;align-items:center;justify-content:center;font-size:22px;overflow:hidden;">📷</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="book-detail-info">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span class="badge badge-success" id="book-status-badge"> </span>
+            <span style="font-size:12px;color:var(--text-light)">Diverifikasi Admin ✓</span>
+          </div>
+          <h1 id="book-judul-detail"> </h1>
+          <div class="detail-row" id="book-penulis-detail">
+            <i class="ti ti-user" style="font-size:15px" aria-hidden="true"></i> Penulis:
+          </div>
+          <div class="detail-row" id="book-genre-detail">
+            <i class="ti ti-tag" style="font-size:15px" aria-hidden="true"></i> Genre:
+          </div>
+          <div class="detail-row" id="book-jurusan-detail">
+            <i class="ti ti-school" style="font-size:15px" aria-hidden="true"></i> Jurusan: <strong>—</strong>
+          </div>
+          <div class="detail-row">
+            <i class="ti ti-star" style="font-size:15px;color:var(--amber)" aria-hidden="true"></i>
+            <span id="book-avg-rating" style="color:var(--amber);font-weight:500"> </span>
+            <span id="book-total-ulasan" style="color:var(--text-light)"> </span>
+          </div>
+          <div class="detail-row" id="book-pemilik-detail">
+            <i class="ti ti-user-circle" style="font-size:15px" aria-hidden="true"></i> Pemilik: <strong>—</strong>
+          </div>
+          <p id="book-deskripsi-detail" style="font-size:13px;color:var(--text-mid);line-height:1.7;margin:1rem 0;"></p>
+
+          <div style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:1rem;display:flex;gap:1.5rem;">
+            <div>
+              <div style="font-size:11px;color:var(--text-light)">Harga Sewa</div>
+              <div style="font-size:18px;font-weight:700;color:var(--warm-brown);">
+                <span id="book-harga-detail"></span><small style="font-size:12px;font-weight:400">/minggu</small>
+              </div>
+            </div>
+            <div style="border-left:0.5px solid var(--border);padding-left:1.5rem;">
+              <div style="font-size:11px;color:var(--text-light)">Durasi Min.</div>
+              <div style="font-size:18px;font-weight:700;color:var(--warm-brown);">1 <small style="font-size:12px;font-weight:400">minggu</small></div>
+            </div>
+            <div style="border-left:0.5px solid var(--border);padding-left:1.5rem;">
+              <div style="font-size:11px;color:var(--text-light)">Durasi Maks.</div>
+              <div style="font-size:18px;font-weight:700;color:var(--warm-brown);">4 <small style="font-size:12px;font-weight:400">minggu</small></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;align-items:center;">
+            <button class="btn-chat" id="btn-chat-pemilik" onclick="chatDariDetailBuku()">
+              <i class="ti ti-message-circle" style="font-size:18px" aria-hidden="true"></i> Chat Pemilik
+            </button>
+            <button class="btn-full" style="flex:1" id="btn-ajukan-sewa" onclick="openModalSewa()">
+              <i class="ti ti-calendar-check" style="font-size:16px;vertical-align:-2px"></i> Ajukan Sewa
+            </button>
+            <button class="btn-secondary" id="btn-wishlist" onclick="toggleWishlist(currentBook?.id)" style="min-width:100px">
+              <i class="ti ti-heart" style="font-size:16px;vertical-align:-2px"></i> Wishlist
+            </button>
+          </div>
+
+          <div style="margin-top:1.5rem;padding:12px;background:var(--info-bg);border-radius:8px;font-size:12px;color:var(--info);">
+            ℹ Klik "Chat & Ajukan Sewa" untuk menghubungi pemilik secara langsung dan mendiskusikan jadwal serah terima.
+          </div>
+
+          <div style="margin-top:1.5rem">
+            <h3 style="font-size:15px;font-weight:600;margin-bottom:12px">Ulasan Penyewa</h3>
+            <div id="form-ulasan" style="background:var(--surface2);border-radius:12px;padding:1rem;margin-bottom:1rem;display:none">
+              <div style="font-size:13px;font-weight:600;margin-bottom:8px">Tulis Ulasanmu</div>
+              <div style="display:flex;gap:6px;margin-bottom:10px" id="star-input">
+                <span style="font-size:24px;cursor:pointer" onclick="setRating(1)">☆</span>
+                <span style="font-size:24px;cursor:pointer" onclick="setRating(2)">☆</span>
+                <span style="font-size:24px;cursor:pointer" onclick="setRating(3)">☆</span>
+                <span style="font-size:24px;cursor:pointer" onclick="setRating(4)">☆</span>
+                <span style="font-size:24px;cursor:pointer" onclick="setRating(5)">☆</span>
+              </div>
+              <textarea id="input-komentar" placeholder="Tulis komentar (opsional)..." style="width:100%;border:0.5px solid var(--border-strong);border-radius:8px;padding:8px 12px;font-size:13px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:70px"></textarea>
+              <button onclick="submitUlasan()" class="btn-full" style="margin-top:8px">Kirim Ulasan</button>
+            </div>
+            <div id="ulasan-list">
+              <div style="text-align:center;color:#999;font-size:13px;padding:1rem">Memuat ulasan...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- ===================== PENYEWA CHAT ===================== -->
+    <div id="screen-chat-penyewa" class="screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-penyewa')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu
+        </div>
+        <div class="nav-actions">
+          <button class="nav-btn" onclick="showScreen('screen-penyewa')">
+            Kembali
+          </button>
+          <div class="avatar" id="avatar-penyewa-chat2">SA</div>
+        </div>
+      </div>
+      <div class="chat-layout">
+        <div class="chat-list">
+          <div class="chat-list-header">💬 Pesan</div>
+          <div class="chat-contacts" id="chat-contacts-penyewa">
+            <div style="padding:20px;text-align:center;color:#999;font-size:13px;">
+              Belum ada percakapan.<br>Mulai chat dari halaman detail buku.
+            </div>
+          </div>
+        </div>
+        <div class="chat-window">
+          <div class="chat-header" id="chat-header-penyewa" style="display:none">
+            <button class="chat-back-btn" onclick="closeChatWindow('penyewa')">
+              <i class="ti ti-arrow-left"></i>
+            </button>
+            <div class="avatar" id="chat-header-avatar">?</div>
+            <div>
+              <div style="font-size:14px;font-weight:500" id="chat-header-nama">Pilih kontak</div>
+              <div style="font-size:12px;color:var(--text-light)" id="chat-header-role">untuk memulai percakapan</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages-penyewa">
+            <div style="padding:40px;text-align:center;color:#999;font-size:13px;">
+              Pilih kontak di sebelah kiri untuk memulai chat
+            </div>
+          </div>
+          <div class="chat-input-area" id="chat-input-area-penyewa" style="display:none">
+            <input
+              class="chat-input"
+              placeholder="Tulis pesan..."
+              id="chat-input-field"
+              onkeydown="if(event.key==='Enter')sendChatMsg('chat-input-field')"
+            />
+            <button class="chat-send-btn" onclick="sendChatMsg('chat-input-field')">
+              <i class="ti ti-send" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== PEMILIK DASHBOARD ===================== -->
+    <div id="screen-pemilik" class="screen dashboard-screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-landing')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu <span>UMSU. Edition</span>
+        </div>
+        <div class="nav-actions">
+          <div class="avatar" id="avatar-pemilik">AF</div>
+          <button class="nav-btn" onclick="apiLogout()">
+            Keluar
+          </button>
+        </div>
+      </div>
+      <div class="app-layout">
+        <div class="sidebar">
+          <div
+            class="sidebar-item active"
+            onclick="switchPemilikTab('overview')"
+          >
+            <i class="ti ti-layout-dashboard" aria-hidden="true"></i> Overview
+          </div>
+          <div class="sidebar-item" onclick="switchPemilikTab('bukuku')">
+            <i class="ti ti-books" aria-hidden="true"></i> Buku Saya
+          </div>
+          <div class="sidebar-item" onclick="switchPemilikTab('permintaan')">
+            <i class="ti ti-clock" aria-hidden="true"></i> Permintaan
+            <span class="sidebar-badge" id="badge-permintaan-pending" style="display:none">0</span>
+          </div>
+          <div class="sidebar-item" onclick="switchPemilikTab('notifikasi')">
+            <i class="ti ti-bell" aria-hidden="true"></i> Notifikasi
+            <span class="sidebar-badge" id="badge-notifikasi" style="display:none">0</span>
+          </div>
+          <div class="sidebar-item" onclick="openChatPemilik()">
+            <i class="ti ti-message-circle" aria-hidden="true"></i> Pesan
+            <span class="sidebar-badge" id="badge-pesan-pemilik" style="display:none">0</span>
+          </div>
+          <div class="sidebar-item" onclick="switchPemilikTab('pendapatan')">
+            <i class="ti ti-currency-dollar" aria-hidden="true"></i> Pendapatan
+          </div>
+          <div class="sidebar-item" style="margin-top: auto" onclick="switchPemilikTab('profil')">
+            <i class="ti ti-user" aria-hidden="true"></i> Profil
+          </div>
+        </div>
+        <div class="main-content" id="pemilik-content">
+
+          <!-- OVERVIEW -->
+          <div id="ptab-overview">
+            <div class="section-head">
+              <h2>Dashboard Pemilik</h2>
+                <span id="overview-greeting" style="font-size: 13px; color: var(--text-light)">Selamat datang 👋</span>
+            </div>
+            <div class="stat-row">
+              <div class="stat-card">
+                <div class="label">Total Buku</div>
+                <div class="value" id="stat-total-buku">—</div>
+                <div class="sub" id="stat-total-buku-sub"></div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Sedang Disewa</div>
+                <div class="value" id="stat-disewa">—</div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Pendapatan Bulan Ini</div>
+                  <div class="value" id="stat-pendapatan" style="font-size: 18px">—</div>
+                  <div class="sub" id="stat-pendapatan-sub"></div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Rating Rata-rata</div>
+                  <div class="value" id="stat-rating">—</div>
+              </div>
+            </div>
+
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start;">
+  <!-- KOLOM KIRI -->
+  <div>
+    <div class="section-head">
+      <h2 style="font-size:16px">Buku Saya</h2>
+      <span class="see-all" onclick="switchPemilikTab('bukuku')">Lihat semua</span>
+    </div>
+    <div class="card" style="overflow:hidden;padding:0;">
+      <div id="overview-buku-list" style="max-height:106px;overflow-y:auto;padding:1rem;">
+        <div style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:13px">Memuat...</div>
+      </div>
+    </div>
+
+  <div style="margin-top:1rem">
+    <div class="section-head">
+      <h2 style="font-size:16px">Permintaan Terbaru</h2>
+      <span class="see-all" onclick="switchPemilikTab('permintaan')">Lihat semua</span>
+    </div>
+    <div class="card" style="overflow:hidden;padding:0;">
+      <div id="overview-permintaan-list" style="max-height:106px;overflow-y:auto;padding:1rem;">
+        <div style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:13px">Memuat...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- KOLOM KANAN -->
+  <div>
+      <div class="section-head">
+        <h2 style="font-size:16px">Notifikasi Terbaru</h2>
+        <span class="see-all" onclick="switchPemilikTab('notifikasi')">Lihat semua</span>
+      </div>
+      <div class="card" style="overflow:hidden;padding:0;">
+        <div id="overview-notifikasi-list" style="max-height:270px;overflow-y:auto;padding:1rem;">
+          <div style="text-align:center;padding:1.5rem;color:var(--text-light);font-size:13px">Memuat...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <!-- BUKU SAYA -->
+          <div id="ptab-bukuku" style="display: none">
+            <div class="section-head">
+              <h2>Buku Saya</h2>
+              <button class="nav-btn primary" onclick="openAddBook()">
+                + Tambah Buku
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Judul</th>
+                    <th>Genre</th>
+                    <th>Harga</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>📗 Kalkulus Lanjut</td>
+                    <td>Matematika</td>
+                    <td>Rp 8.000/mg</td>
+                    <td>
+                      <span class="badge badge-warning">Pending Admin</span>
+                    </td>
+                    <td>★★★★☆</td>
+                    <td>
+                      <button
+                        style="
+                          font-size: 11px;
+                          padding: 3px 10px;
+                          border-radius: 6px;
+                          background: var(--surface2);
+                          border: 0.5px solid var(--border);
+                          cursor: pointer;
+                        "
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>📙 Akuntansi Biaya</td>
+                    <td>Ekonomi</td>
+                    <td>Rp 7.500/mg</td>
+                    <td><span class="badge badge-success">Tersedia</span></td>
+                    <td>★★★★☆</td>
+                    <td>
+                      <button
+                        style="
+                          font-size: 11px;
+                          padding: 3px 10px;
+                          border-radius: 6px;
+                          background: var(--surface2);
+                          border: 0.5px solid var(--border);
+                          cursor: pointer;
+                        "
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>📘 Basis Data</td>
+                    <td>Informatika</td>
+                    <td>Rp 10.000/mg</td>
+                    <td><span class="badge badge-danger">Dipinjam</span></td>
+                    <td>★★★★★</td>
+                    <td>
+                      <button
+                        style="
+                          font-size: 11px;
+                          padding: 3px 10px;
+                          border-radius: 6px;
+                          background: var(--surface2);
+                          border: 0.5px solid var(--border);
+                          cursor: pointer;
+                        "
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- PERMINTAAN -->
+          <div id="ptab-permintaan" style="display: none">
+            <div class="section-head">
+              <h2>Permintaan Sewa</h2>
+              <div style="display:flex;gap:8px;align-items:center">
+                <select id="filter-permintaan" class="form-select"
+                  style="font-size:13px;padding:5px 10px;height:auto;width:auto"
+                  onchange="loadPermintaan()">
+                  <option value="">Semua Status</option>
+                  <option value="pending" selected>Menunggu</option>
+                  <option value="disetujui">Disetujui</option>
+                  <option value="ditolak">Ditolak</option>
+                  <option value="terlambat">Terlambat</option>
+                  <option value="pengajuan_kembali">Minta Dikembalikan</option>
+                </select>
+              </div>
+            </div>
+            <div id="permintaan-list">
+              <div style="text-align:center;padding:3rem;color:var(--text-light);font-size:14px">Memuat...</div>
+            </div>
+          </div>
+
+
+          <!-- NOTIFIKASI -->
+          <div id="ptab-notifikasi" style="display: none">
+            <div class="section-head">
+              <h2>Notifikasi</h2>
+              <span
+                onclick="tandaiSemuaDibaca()"
+                style="font-size:12px;color:var(--warm-brown);cursor:pointer"
+              >Tandai semua dibaca</span>
+            </div>
+            <div class="card" id="notifikasi-list">
+              <div style="text-align:center;padding:2rem;color:var(--text-light);font-size:13px">
+                Memuat notifikasi...
+              </div>
+            </div>
+          </div>
+
+
+          <!-- PENDAPATAN -->
+          <div id="ptab-pendapatan" style="display: none">
+            <div class="section-head"><h2>Pendapatan</h2></div>
+            <div class="stat-row" style="grid-template-columns: repeat(3, 1fr)">
+              <div class="stat-card">
+                <div class="label">Total Keseluruhan</div>
+                <div class="value" style="font-size: 20px" id="pend-total">—</div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Bulan Ini</div>
+                <div class="value" style="font-size: 20px" id="pend-bulan">—</div>
+                <div class="sub" id="pend-bulan-sub"></div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Transaksi Selesai</div>
+                <div class="value" id="pend-transaksi">—</div>
+              </div>
+            </div>
+            <div class="table-wrap" style="margin-top: 1rem">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Buku</th>
+                    <th>Penyewa</th>
+                    <th>Durasi</th>
+                    <th>Pendapatan</th>
+                    <th>Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody id="pend-tbody">
+                   <tr><td colspan="5" style="text-align:center;color:#999;padding:20px">Memuat...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+
+          <!-- TAB PROFIL PEMILIK -->
+          <div id="ptab-profil" style="display:none">
+            <h2 style="font-size:18px;font-weight:600;margin-bottom:1.5rem;">Profil</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;">
+
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;">
+                  <div style="display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;">
+                    <div id="profil-avatar-pemilik" style="width:56px;height:56px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--warm-brown);flex-shrink:0;overflow:hidden;"></div>
+                    <div>
+                      <div id="profil-nama-pemilik" style="font-size:16px;font-weight:600;color:var(--text-dark);"></div>
+                      <div style="font-size:12px;color:var(--warm-brown);margin-top:2px;">Pemilik</div>
+                    </div>
+                  </div>
+                  <div style="border-top:0.5px solid var(--border);padding-top:1rem;display:flex;flex-direction:column;gap:10px;">
+                    <div style="display:flex;justify-content:space-between;font-size:13px;">
+                      <span style="color:var(--text-mid);">NPM</span>
+                      <span id="profil-npm-pemilik" style="font-weight:500;color:var(--text-dark);"></span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;">
+                      <span style="color:var(--text-mid);">Email</span>
+                      <span id="profil-email-pemilik" style="font-weight:500;color:var(--text-dark);"></span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;">
+                      <span style="color:var(--text-mid);">Jurusan</span>
+                      <span id="profil-jurusan-pemilik" style="font-weight:500;color:var(--text-dark);"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <button onclick="profilAction('ktm', 'pemilik')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+                  <i class="ti ti-id-badge-2" style="font-size:16px;color:var(--warm-brown)"></i> Lihat Foto KTM
+                </button>
+                <button onclick="profilAction('uploadfoto', 'pemilik')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+                  <i class="ti ti-camera" style="font-size:16px;color:var(--warm-brown)"></i> Upload Foto Profil
+                </button>
+                <button onclick="profilAction('edit', 'pemilik')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+                  <i class="ti ti-edit" style="font-size:16px;color:var(--warm-brown)"></i> Edit Profil
+                </button>
+                <button onclick="profilAction('password', 'pemilik')" style="width:100%;padding:10px;border-radius:10px;background:var(--surface);border:0.5px solid var(--border);color:var(--text-dark);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+                  <i class="ti ti-lock" style="font-size:16px;color:var(--warm-brown)"></i> Ganti Password
+                </button>
+                <button onclick="profilAction('keluar', 'pemilik')" style="width:100%;padding:10px;border-radius:10px;background:var(--danger-bg);border:0.5px solid var(--danger);color:var(--danger);font-size:13px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px;">
+                  <i class="ti ti-logout" style="font-size:16px;"></i> Keluar
+                </button>
+              </div>
+
+              <div id="profil-panel-pemilik" style="background:var(--surface);border:0.5px solid var(--border);border-radius:16px;padding:1.5rem;min-height:300px;">
+                <div style="text-align:center;padding:3rem;color:var(--text-light);font-size:13px;">
+                  Pilih menu di kiri untuk menampilkan konten.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- MOBILE BOTTOM NAV PEMILIK -->
+<nav class="mobile-bottom-nav" id="pemilik-bottom-nav" style="display:none">
+  <button class="mbn-item active" id="pmbn-overview" onclick="switchPemilikTab('overview'); setPmbnActive('pmbn-overview')">
+    <i class="ti ti-layout-dashboard"></i>
+    <span>Overview</span>
+  </button>
+  <button class="mbn-item" id="pmbn-bukuku" onclick="switchPemilikTab('bukuku'); setPmbnActive('pmbn-bukuku')">
+    <i class="ti ti-books"></i>
+    <span>Buku Saya</span>
+  </button>
+  <button class="mbn-item" id="pmbn-permintaan" onclick="switchPemilikTab('permintaan'); setPmbnActive('pmbn-permintaan')">
+    <i class="ti ti-clock"></i>
+    <span>Permintaan</span>
+    <span class="mbn-badge" id="pmbn-badge-permintaan"></span>
+  </button>
+  <button class="mbn-item" id="pmbn-pesan" onclick="openChatPemilik(); setPmbnActive('pmbn-pesan')">
+    <i class="ti ti-message-circle"></i>
+    <span>Pesan</span>
+    <span class="mbn-badge" id="pmbn-badge-pesan"></span>
+  </button>
+  <button class="mbn-item" id="pmbn-profil" onclick="switchPemilikTab('profil'); setPmbnActive('pmbn-profil')">
+    <i class="ti ti-user"></i>
+    <span>Profil</span>
+  </button>
+</nav>
+
+    <!-- ===================== PEMILIK CHAT ===================== -->
+    <div id="screen-chat-pemilik" class="screen" style="flex-direction: column">
+      <div class="topnav">
+        <div class="brand" onclick="showScreen('screen-pemilik')">
+          <img src="logo.png" style="width:32px;height:32px;object-fit:contain;border-radius:8px;" /> BukuKu
+        </div>
+        <div class="nav-actions">
+          <button class="nav-btn" onclick="showScreen('screen-pemilik')">
+            Kembali
+          </button>
+          <div class="avatar" id="avatar-pemilik-chat">AF</div>
+        </div>
+      </div>
+      <div class="chat-layout">
+        <div class="chat-list">
+          <div class="chat-list-header">Pesan Masuk</div>
+          <div class="chat-contacts" id="chat-contacts-pemilik">
+            <div style="padding:20px;text-align:center;color:#999;font-size:13px;">
+              Memuat kontak...
+            </div>
+          </div>
+        </div>
+        <div class="chat-window">
+          <div class="chat-header" id="chat-header-pemilik" style="display:none">
+            <button class="chat-back-btn" onclick="closeChatWindow('pemilik')">
+              <i class="ti ti-arrow-left"></i>
+            </button>
+            <div class="avatar" id="chat-pemilik-header-avatar">?</div>
+            <div>
+              <div style="font-size:14px;font-weight:500" id="chat-pemilik-header-nama">Pilih kontak</div>
+              <div style="font-size:12px;color:var(--text-light)" id="chat-pemilik-header-role">untuk memulai percakapan</div>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages-pemilik">
+            <div style="padding:40px;text-align:center;color:#999;font-size:13px;">
+              Pilih kontak di sebelah kiri untuk memulai chat
+            </div>
+          </div>
+          <div class="chat-input-area" id="chat-input-area-pemilik" style="display:none">
+            <input
+              class="chat-input"
+              placeholder="Balas pesan..."
+              id="chat-pemilik-input"
+              onkeydown="if(event.key==='Enter')sendPemilikMsg()"
+            />
+            <button class="chat-send-btn" onclick="sendPemilikMsg()">
+              <i class="ti ti-send" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== MODAL: TAMBAH BUKU ===================== -->
+    <div
+      id="modal-addbuku"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 200;
+        overflow-y: auto;
+      "
+    >
+      <div
+        style="
+          min-height: 100%;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          padding: 2rem;
+        "
+      >
+        <div class="modal-box">
+          <div class="modal-header">
+            <h3>📚 Tambah Buku Baru</h3>
+            <button class="modal-close" onclick="closeAddBook()">✕</button>
+          </div>
+          <label class="form-label">Judul Buku *</label>
+          <input class="form-input" id="book-judul" placeholder="cth: Kalkulus Lanjut Edisi 5" />
+          <label class="form-label">Penulis *</label>
+          <input class="form-input" id="book-penulis" placeholder="cth: James Stewart" />
+          <label class="form-label">Penerbit</label>
+          <input class="form-input" id="book-penerbit" placeholder="cth: Erlangga" />
+
+
+          <label class="form-label">Kategori / Genre / Bidang Ilmu *</label>
+          <div class="cs-wrap">
+            <div class="cs-row">
+            <button type="button" class="cs-btn" id="gbtn-kategori" onclick="gToggle('kategori')">
+              <span>Kategori</span>
+              <span style="display:flex;align-items:center;gap:5px">
+                <span class="cs-badge-g" id="gbadge-kategori">0</span>
+                <i class="ti ti-chevron-down" style="font-size:13px"></i>
+              </span>
+            </button>
+            <button type="button" class="cs-btn" id="gbtn-genre" onclick="gToggle('genre')">
+              <span>Genre</span>
+              <span style="display:flex;align-items:center;gap:5px">
+                <span class="cs-badge-g" id="gbadge-genre">0</span>
+                <i class="ti ti-chevron-down" style="font-size:13px"></i>
+              </span>
+            </button>
+            <button type="button" class="cs-btn" id="gbtn-bidang" onclick="gToggle('bidang')">
+              <span>Bidang Ilmu</span>
+              <span style="display:flex;align-items:center;gap:5px">
+                <span class="cs-badge-g" id="gbadge-bidang">0</span>
+                <i class="ti ti-chevron-down" style="font-size:13px"></i>
+              </span>
+            </button>
+          </div>
+
+  <div class="cs-dropdown-g" id="gdd-kategori">
+    <div class="cs-sec">Kategori</div>
+    <div class="cs-grid-g" id="ggrid-kategori"></div>
+    <div class="cs-foot-g">
+      <button type="button" class="cs-clear-g" onclick="gClear('kategori')">Hapus semua</button>
+      <button type="button" class="cs-done-g" onclick="gClose('kategori')">Selesai</button>
+    </div>
+  </div>
+  <div class="cs-dropdown-g" id="gdd-genre">
+    <div class="cs-sec">Genre</div>
+    <div class="cs-grid-g" id="ggrid-genre"></div>
+    <div class="cs-foot-g">
+      <button type="button" class="cs-clear-g" onclick="gClear('genre')">Hapus semua</button>
+      <button type="button" class="cs-done-g" onclick="gClose('genre')">Selesai</button>
+    </div>
+  </div>
+  <div class="cs-dropdown-g" id="gdd-bidang">
+    <div class="cs-sec">Bidang Ilmu</div>
+    <div class="cs-grid-g" id="ggrid-bidang"></div>
+    <div class="cs-foot-g">
+      <button type="button" class="cs-clear-g" onclick="gClear('bidang')">Hapus semua</button>
+      <button type="button" class="cs-done-g" onclick="gClose('bidang')">Selesai</button>
+    </div>
+  </div>
+
+  <div class="cs-tags" id="g-selected-tags"></div>
+  <input type="hidden" id="book-genre" />
+</div>
+
+          
+          <label class="form-label">Jurusan</label>
+          <input class="form-input" id="book-jurusan" placeholder="cth: Teknik Informatika" />
+          <label class="form-label">Harga Sewa (per minggu) *</label>
+          <input class="form-input" type="number" id="book-harga" placeholder="cth: 8000" min="1000" />
+          <label class="form-label">Kondisi Buku *</label>
+          <select class="form-select" id="book-kondisi">
+            <option value="baru">Baru</option>
+            <option value="baik" selected>Baik</option>
+            <option value="cukup">Cukup</option>
+          </select>
+          <label class="form-label">Deskripsi Kondisi Buku *</label>
+          <textarea class="form-textarea" id="book-deskripsi"
+            placeholder="cth: Kondisi baik, ada beberapa coret-coretan stabilo. Halaman lengkap, sampul sedikit lusuh."
+          ></textarea>
+          <label class="form-label">Foto Kondisi Buku</label>
+          <div class="upload-zone-modal" id="book-photo-zone" onclick="document.getElementById('book-photo-file').click()" style="cursor:pointer;">
+            <i class="ti ti-camera" aria-hidden="true"></i>
+            <span>Klik untuk unggah foto buku (maks. 5 MB)</span>
+          </div>
+          <div class="upload-preview" id="book-photo-preview" style="display:none;">
+            <i class="ti ti-circle-check" aria-hidden="true"></i>
+            <span id="book-photo-filename">foto.jpg</span>
+            <span class="remove" onclick="removeBookPhoto()">✕ Hapus</span>
+          </div>
+          <input type="file" id="book-photo-file" accept="image/*" style="display:none" onchange="handleBookPhoto(this)" />
+          <!-- Foto 2 -->
+          <label class="form-label" style="margin-top:10px">Foto Kondisi Buku 2</label>
+          <div class="upload-zone-modal" id="book-photo-zone-2" onclick="document.getElementById('book-photo-file-2').click()" style="cursor:pointer;">
+            <i class="ti ti-camera" aria-hidden="true"></i>
+            <span>Klik untuk unggah foto buku ke-2 (maks. 5 MB)</span>
+          </div>
+          <div class="upload-preview" id="book-photo-preview-2" style="display:none;">
+            <i class="ti ti-circle-check" aria-hidden="true"></i>
+            <span id="book-photo-filename-2">foto2.jpg</span>
+            <span class="remove" onclick="removeBookPhoto2()">✕ Hapus</span>
+          </div>
+          <input type="file" id="book-photo-file-2" accept="image/*" style="display:none" onchange="handleBookPhoto2(this)" />
+
+          <!-- Foto 3 -->
+          <label class="form-label" style="margin-top:10px">Foto Kondisi Buku 3</label>
+          <div class="upload-zone-modal" id="book-photo-zone-3" onclick="document.getElementById('book-photo-file-3').click()" style="cursor:pointer;">
+            <i class="ti ti-camera" aria-hidden="true"></i>
+            <span>Klik untuk unggah foto buku ke-3 (maks. 5 MB)</span>
+          </div>
+          <div class="upload-preview" id="book-photo-preview-3" style="display:none;">
+            <i class="ti ti-circle-check" aria-hidden="true"></i>
+            <span id="book-photo-filename-3">foto3.jpg</span>
+            <span class="remove" onclick="removeBookPhoto3()">✕ Hapus</span>
+          </div>
+          <input type="file" id="book-photo-file-3" accept="image/*" style="display:none" onchange="handleBookPhoto3(this)" />
+          <div style="background:var(--warning-bg);border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12px;color:var(--warning);">
+            ⏳ Listing akan diperiksa admin terlebih dahulu sebelum tayang (estimasi 1–2 hari kerja).
+          </div>
+          <button class="btn-full" id="btn-tambah-buku" onclick="apiTambahBuku()">
+            Kirim untuk Verifikasi
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- MODAL AJUKAN SEWA -->
+<div id="modal-sewa" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; flex-direction:column; align-items:center; justify-content:center;">
+  <div style="background:var(--surface);border-radius:16px;padding:1.5rem;width:90%;max-width:400px;box-shadow:0 8px 32px rgba(0,0,0,0.15)">
+    
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+      <h3 style="font-size:15px;font-weight:600">Ajukan Permintaan Sewa</h3>
+      <button onclick="closeModalSewa()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light)">✕</button>
+    </div>
+
+    <div id="modal-sewa-judulbuku" style="font-size:13px;font-weight:600;color:var(--warm-brown);margin-bottom:1rem;padding:8px 12px;background:var(--amber-light);border-radius:8px">—</div>
+
+    <label class="form-label">Durasi Sewa <span>*</span></label>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+      <button onclick="changeDurasi(-1)" style="width:36px;height:36px;border-radius:8px;border:0.5px solid var(--border-strong);background:var(--surface2);font-size:18px;cursor:pointer;">−</button>
+      <div style="flex:1;text-align:center">
+        <span id="durasi-val" style="font-size:22px;font-weight:700;color:var(--warm-brown)">1</span>
+        <span style="font-size:13px;color:var(--text-mid)"> minggu</span>
+      </div>
+      <button onclick="changeDurasi(1)" style="width:36px;height:36px;border-radius:8px;border:0.5px solid var(--border-strong);background:var(--surface2);font-size:18px;cursor:pointer;">+</button>
+    </div>
+
+    <div style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:1.25rem;font-size:13px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="color:var(--text-mid)">Harga per minggu</span>
+        <span id="modal-harga-minggu" style="font-weight:500">Rp —</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-weight:600;font-size:14px;color:var(--warm-brown);border-top:0.5px solid var(--border);padding-top:8px;margin-top:4px">
+        <span>Total</span>
+        <span id="modal-total-harga">Rp —</span>
+      </div>
+    </div>
+
+    <label class="form-label">Catatan untuk Pemilik <span style="color:var(--text-light)">(opsional)</span></label>
+    <textarea id="sewa-catatan" placeholder="Misal: bisa ketemu di kantin jam 10 pagi..." 
+      style="width:100%;border:0.5px solid var(--border-strong);border-radius:8px;padding:8px 12px;font-size:13px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:70px;margin-bottom:1.25rem;box-sizing:border-box"></textarea>
+
+    <button id="btn-submit-sewa" class="btn-full" onclick="apiAjukanSewa()">
+      <i class="ti ti-send" style="font-size:15px;vertical-align:-2px"></i>
+      Kirim Permintaan Sewa
+    </button>
+
+  </div>
+</div>
+
+
+    <script src="config.js"></script>
+    <script src="bukuku.js"></script>
+    <script src="api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.16.1/dist/echo.iife.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pusher-js@8.4.0/dist/web/pusher.min.js"></script>
+  </body>
+</html>
