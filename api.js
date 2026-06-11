@@ -1785,6 +1785,11 @@ async function loadOverview() {
         ${
           r.book?.foto_path
             ? `<img src="${window.BUKUKU_SERVER}/storage/${r.book.foto_path}" style="width:100%;height:100%;object-fit:cover;" />`
+            : `📗`
+        }
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.book?.judul || "Buku"}</div>
           <div style="font-size:12px;color:var(--text-light)">${r.penyewa?.nama || "—"} · ${r.durasi_minggu || "?"} minggu</div>
         </div>
         <div style="display:flex; gap:8px; align-items:center;">
