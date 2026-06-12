@@ -4,7 +4,8 @@
 // =============================================
 
 // URL server dibaca dari config.js (load config.js sebelum api.js di HTML)
-const API_BASE = window.BUKUKU_API_BASE || "https://web-production-7dfb7.up.railway.app/api";
+const API_BASE =
+  window.BUKUKU_API_BASE || "https://web-production-7dfb7.up.railway.app/api";
 
 // --- Helper: ambil token dari localStorage ---
 function getToken() {
@@ -192,12 +193,16 @@ async function apiLogin() {
         if (role === "pemilik") {
           showScreen("screen-pemilik");
           switchPemilikTab("overview");
-          if (isMobile) document.getElementById("pemilik-bottom-nav").style.display = "flex";
+          if (isMobile)
+            document.getElementById("pemilik-bottom-nav").style.display =
+              "flex";
         } else {
           showScreen("screen-penyewa");
           switchPenyewaTab("browse");
           loadSewaAktif();
-          if (isMobile) document.getElementById("mobile-nav-penyewa").style.display = "flex";
+          if (isMobile)
+            document.getElementById("mobile-nav-penyewa").style.display =
+              "flex";
         }
       }, 600);
     } else {
@@ -424,7 +429,6 @@ function showToast(message, type = "info") {
   setTimeout(() => toast?.remove(), 4000);
 }
 
-
 function setMbnActive(id) {
   document
     .querySelectorAll(".mobile-bottom-nav .mbn-item")
@@ -432,7 +436,6 @@ function setMbnActive(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add("active");
 }
-
 
 // =============================================
 // AUTO: cek session saat halaman dimuat
@@ -471,12 +474,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user.role === "pemilik") {
       showScreen("screen-pemilik");
       switchPemilikTab("overview");
-      if (isMobile) document.getElementById("pemilik-bottom-nav").style.display = "flex";
+      if (isMobile)
+        document.getElementById("pemilik-bottom-nav").style.display = "flex";
     } else {
       showScreen("screen-penyewa");
       switchPenyewaTab("browse");
       loadSewaAktif();
-      if (isMobile) document.getElementById("mobile-nav-penyewa").style.display = "flex";
+      if (isMobile)
+        document.getElementById("mobile-nav-penyewa").style.display = "flex";
     }
   }
 });
@@ -486,7 +491,7 @@ window.addEventListener("resize", () => {
   const isMobile = window.innerWidth <= 768;
   const navPenyewa = document.getElementById("mobile-nav-penyewa");
   const navPemilik = document.getElementById("pemilik-bottom-nav");
-  if (navPenyewa && navPenyewa.style.display !== "" ) {
+  if (navPenyewa && navPenyewa.style.display !== "") {
     navPenyewa.style.display = isMobile ? "flex" : "none";
   }
   if (navPemilik && navPemilik.style.display !== "") {
@@ -506,8 +511,9 @@ let activeChatUserId = null;
 // Inisialisasi Echo (WebSocket)
 function initEcho() {
   if (echoInstance) return;
-  const reverbHost = (window.BUKUKU_SERVER || "https://web-production-7dfb7.up.railway.app")
-    .replace(/^https?:\/\//, "");
+  const reverbHost = (
+    window.BUKUKU_SERVER || "https://web-production-7dfb7.up.railway.app"
+  ).replace(/^https?:\/\//, "");
   echoInstance = new window.Echo({
     broadcaster: "reverb",
     key: "xlp1nolixazjrxu97lbq",
@@ -604,8 +610,13 @@ function _startPolling(myUserId) {
     if (user && user.role === "pemilik") {
       try {
         const chatRes = await apiRequest("GET", "/chat/users");
-        const chatContacts = (chatRes.data || []).filter(u => u.role !== "admin");
-        const totalUnread = chatContacts.reduce((sum, u) => sum + (u.unread_count || 0), 0);
+        const chatContacts = (chatRes.data || []).filter(
+          (u) => u.role !== "admin",
+        );
+        const totalUnread = chatContacts.reduce(
+          (sum, u) => sum + (u.unread_count || 0),
+          0,
+        );
         const badgePesan = document.getElementById("badge-pesan-pemilik");
         if (badgePesan) {
           badgePesan.textContent = totalUnread;
@@ -618,8 +629,13 @@ function _startPolling(myUserId) {
     if (user && user.role === "penyewa") {
       try {
         const chatRes = await apiRequest("GET", "/chat/users");
-        const chatContacts = (chatRes.data || []).filter(u => u.role !== "admin");
-        const totalUnread = chatContacts.reduce((sum, u) => sum + (u.unread_count || 0), 0);
+        const chatContacts = (chatRes.data || []).filter(
+          (u) => u.role !== "admin",
+        );
+        const totalUnread = chatContacts.reduce(
+          (sum, u) => sum + (u.unread_count || 0),
+          0,
+        );
         const badgePesan = document.getElementById("badge-pesan-penyewa");
         if (badgePesan) {
           badgePesan.textContent = totalUnread;
@@ -747,8 +763,8 @@ async function openChat(userId, nama, fotoUrl) {
   if (headerNama) headerNama.textContent = nama;
   if (headerRole) headerRole.textContent = "Pemilik Buku";
   if (headerAvatar) {
-    if (user && user.foto_url) {
-      headerAvatar.innerHTML = `<img src="${user.foto_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+    if (fotoUrl) {
+      headerAvatar.innerHTML = `<img src="${fotoUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
       headerAvatar.style.padding = "0";
       headerAvatar.style.overflow = "hidden";
     } else {
@@ -878,12 +894,6 @@ async function loadChatUsers() {
     div.onclick = () => openChat(user.id, user.nama, user.foto_url);
     div.innerHTML = `
       <div class="avatar" style="overflow:hidden;padding:0;">
-        ${
-          user.foto_url
-            ? `<img src="${user.foto_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`
-            : user.nama.charAt(0).toUpperCase()
-        }
-      </div>
         ${
           user.foto_url
             ? `<img src="${user.foto_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`
@@ -2801,8 +2811,6 @@ async function tandaiSemuaDibacaPenyewa() {
   showToast("Semua notifikasi ditandai dibaca.", "success");
 }
 
-
-
 // =============================================
 // PROFIL
 // =============================================
@@ -2827,10 +2835,10 @@ async function loadProfil(role) {
 
   const suffix = role;
   const avatarEl = document.getElementById(`profil-avatar-${suffix}`);
-  const namaEl   = document.getElementById(`profil-nama-${suffix}`);
-  const npmEl    = document.getElementById(`profil-npm-${suffix}`);
-  const emailEl  = document.getElementById(`profil-email-${suffix}`);
-  const jurusanEl= document.getElementById(`profil-jurusan-${suffix}`);
+  const namaEl = document.getElementById(`profil-nama-${suffix}`);
+  const npmEl = document.getElementById(`profil-npm-${suffix}`);
+  const emailEl = document.getElementById(`profil-email-${suffix}`);
+  const jurusanEl = document.getElementById(`profil-jurusan-${suffix}`);
 
   // Isi inisial avatar
   const inisial = updatedUser.nama
@@ -2960,7 +2968,7 @@ function profilAction(action, role) {
 }
 
 async function apiEditProfil(role) {
-  const nama  = document.getElementById(`edit-nama-${role}`)?.value.trim();
+  const nama = document.getElementById(`edit-nama-${role}`)?.value.trim();
   const email = document.getElementById(`edit-email-${role}`)?.value.trim();
 
   if (!nama || !email) {
@@ -2973,18 +2981,23 @@ async function apiEditProfil(role) {
     if (res.success) {
       // Update session
       const user = getUser();
-      user.nama  = nama;
+      user.nama = nama;
       user.email = email;
       localStorage.setItem("bukuku_user", JSON.stringify(user));
 
       // Update tampilan card
-      document.getElementById(`profil-nama-${role}`).textContent  = nama;
+      document.getElementById(`profil-nama-${role}`).textContent = nama;
       document.getElementById(`profil-email-${role}`).textContent = email;
 
       // Update inisial avatar
-      const inisial = nama.split(" ").map(n => n.charAt(0).toUpperCase()).slice(0,2).join("");
+      const inisial = nama
+        .split(" ")
+        .map((n) => n.charAt(0).toUpperCase())
+        .slice(0, 2)
+        .join("");
       const avatarEl = document.getElementById(`profil-avatar-${role}`);
-      if (avatarEl && !avatarEl.querySelector("img")) avatarEl.textContent = inisial;
+      if (avatarEl && !avatarEl.querySelector("img"))
+        avatarEl.textContent = inisial;
 
       showToast("Profil berhasil diperbarui!", "success");
     } else {
@@ -2996,8 +3009,8 @@ async function apiEditProfil(role) {
 }
 
 async function apiGantiPassword(role) {
-  const oldPass  = document.getElementById(`old-pass-${role}`)?.value;
-  const newPass  = document.getElementById(`new-pass-${role}`)?.value;
+  const oldPass = document.getElementById(`old-pass-${role}`)?.value;
+  const newPass = document.getElementById(`new-pass-${role}`)?.value;
   const newPass2 = document.getElementById(`new-pass2-${role}`)?.value;
 
   if (!oldPass || !newPass || !newPass2) {
@@ -3021,8 +3034,8 @@ async function apiGantiPassword(role) {
     });
     if (res.success) {
       showToast("Password berhasil diganti!", "success");
-      document.getElementById(`old-pass-${role}`).value  = "";
-      document.getElementById(`new-pass-${role}`).value  = "";
+      document.getElementById(`old-pass-${role}`).value = "";
+      document.getElementById(`new-pass-${role}`).value = "";
       document.getElementById(`new-pass2-${role}`).value = "";
     } else {
       showToast(res.message || "Gagal mengganti password.", "error");
